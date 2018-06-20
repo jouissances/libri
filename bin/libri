@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+require '../lib/libri'
+
+
+Libri::CLI.new.call

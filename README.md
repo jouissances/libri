@@ -1,28 +1,15 @@
 # Libri
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/libri`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem is made with the purpose of retrieving detailed information about various book awards shortlist for 2017-2018. All our data is scraped from Barnes & Noble's website. We may consider updating the CLI for future years' awards.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+You can install this gem via `gem install libri`. The `libri` CLI will be installed and you can run `libri` to get a list of notable book awards and a list of shortlisted books available on the B&N website, as well as details and excerpts from the books.
 
-```ruby
-gem 'libri'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install libri
 
 ## Usage
 
-TODO: Write usage instructions here
+After installation, run the gem in your CLI by executing `libri`. Make sure to have installed all the required gems beforehand (pry, nokogiri, and open-air), otherwise the command would return error.
 
 ## Development
 

@@ -1,5 +1,2 @@
-require "libri/version"
-
-module Libri
-  # Your code goes here...
-end
+require_relative './libri/version'
+require_relative './libri/cli'
