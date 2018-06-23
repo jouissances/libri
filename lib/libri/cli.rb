@@ -3,9 +3,9 @@ class Libri::CLI
 
     def call
         puts <<~HEREDOC
-            "’Tis some visitor,” I muttered, “tapping at my chamber door—"
-            "Have you come to indulge in my trophies?"
-            "Well, well.."
+            ’Tis some visitor,” I muttered, “tapping at my chamber door—
+            Have you come to indulge in my trophies?
+            Well, well..
         HEREDOC
         list_awards
         leave
@@ -13,6 +13,11 @@ class Libri::CLI
 
     def list_awards
         @awards = Libri::Awards.all
+        @awards.each.with_index(1) { |award, i|
+            puts "#{i}. #{award}"
+        }
+        puts "Which award would you like to explore?"
+
         menu
     end
 
