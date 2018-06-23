@@ -1,0 +1,3 @@
+class Libri::Books
+    
+end
