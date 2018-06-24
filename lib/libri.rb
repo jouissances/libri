@@ -1,7 +1,6 @@
 require 'open-uri'
 require 'nokogiri'
 require 'colorize'
-require 'pry'
 
 require_relative './libri/version'
 require_relative './libri/cli'
