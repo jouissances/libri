@@ -6,11 +6,11 @@ require "libri/version"
 Gem::Specification.new do |spec|
   spec.name          = "libri"
   spec.version       = Libri::VERSION
-  spec.authors       = ["<github username>"]
-  spec.email         = ["<github email address>"]
+  spec.authors       = ["jouissances"]
+  spec.email         = ["janicedarikho@gmail.com"]
 
-  spec.summary       = %q{todo: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{todo: Write a longer description or delete this line.}
+  spec.summary       = %q{CLI for retrieving info about certain award-shortlisted books}
+  spec.description   = %q{Scrapes the Barnes & Noble website (https://www.barnesandnoble.com/) and provides a CLI for viewing various book awards, the respective shortlisted books, as well as details about each book.}
   spec.homepage      = "https://rubygems.org"
   spec.license       = "MIT"
 

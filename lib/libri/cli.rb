@@ -5,6 +5,7 @@ class Libri::CLI
         puts "’Tis some visitor, tapping at my chamber door—".blue
         puts "Have you come to indulge in my trophies?".blue
         puts "Well, well..".blue
+        puts "Welcome to Libri, a chamber full of literary wonders.".blue
         puts "Do come inside, this will take a few moments..".blue
         list_awards
         leave
@@ -27,7 +28,7 @@ class Libri::CLI
         }
         puts "Which book would you like to know more about?".blue
 
-        menu_books
+        menu_books(award)
     end
 
     def list_details(book)
@@ -39,36 +40,40 @@ class Libri::CLI
     end
 
     def menu_awards
-        input = nil
-
-        while input != "exit"
-            input = STDIN.gets.strip.downcase
-      
-            if input.to_i > 0
-                award = @awards_array[input.to_i - 1]
-                list_books(award)
-            elsif input == "list"
-                list_awards
-            else
-              puts "Please try again.".red
-            end
+        input = STDIN.gets.strip.downcase
+    
+        if input.to_i > 0
+            award = @awards_array[input.to_i - 1]
+            list_books(award)
+        elsif input == "list awards"
+            list_awards
+        elsif input == "exit"
+            nil
+        else
+            puts "The raven croaked, 'Please try again.'".red
+            list_awards
         end
     end
 
-    def menu_books
-        input = nil
-
-        while input != "exit"
-            input = STDIN.gets.strip.downcase
-      
-            if input.to_i > 0
-                book = @books_array[input.to_i - 1]
-                list_details(book)
-            elsif input == "list"
-                list_books(award)
-            else
-              puts "Please try again.".red
-            end
+    def menu_books(award)
+        input = STDIN.gets.strip.downcase
+    
+        if input.to_i > 0
+            book = @books_array[input.to_i - 1]
+            list_details(book)
+            puts "---------------------------------------------------"
+            puts "To list the books of the same award again, type list books.".blue
+            puts "To list all the awards again, type list awards".blue
+            menu_books(award)            
+        elsif input == "list books"
+            list_books(award)
+        elsif input == "list awards"
+            list_awards
+        elsif input == "exit"
+            nil
+        else
+            puts "The raven croaked, 'Please try again.'".red
+            list_books(award)
         end
     end
 
