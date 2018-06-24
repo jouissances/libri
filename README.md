@@ -1,15 +1,14 @@
 # Libri
 
-This gem is made with the purpose of retrieving detailed information about various book awards shortlist for 2017 — 2018. All data is scraped from Barnes & Noble's website.
+This gem scrapes the Barnes & Noble website (https://www.barnesandnoble.com/) and provides a CLI for viewing various book awards, the respective shortlisted books, as well as details about each book.
 
 ## Installation
 
-You can install this gem via `gem install libri` on your terminal. The `libri` CLI will be installed and you can run `libri` on the terimnal to get a list of notable book awards and a list of shortlisted books available on the B&N website, as well as details and excerpts from the books.
-
+You can install this gem via `gem install libri` on your terminal. 
 
 ## Usage
 
-After installation, run the gem in your CLI by executing `libri`. Make sure to have installed all the required gems beforehand (pry, nokogiri, and open-air), otherwise the command would return error.
+After installation, run the gem in your CLI by executing `libri`. Make sure to have installed all the required gems beforehand (pry, nokogiri, and open-air) by running `bundle install`, otherwise the command would return error.
 
 ## Development
 
