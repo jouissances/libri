@@ -20,7 +20,7 @@ class Libri::Book
             #         :url => "https://www.barnesandnoble.com" + book.css("a").attribute("href").value
             #     }
             # },
-            :availability => book_page.css("button#pdp-marketplace-btn").text.strip,
+            :availability => book_page.css("button#pdp-marketplace-btn").text.chomp,
             :url => book[:url]
         }
 

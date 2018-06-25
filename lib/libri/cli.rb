@@ -1,13 +1,40 @@
 class Libri::CLI
     attr_accessor :awards, :name, :book, :url
 
+    LINE = "----------------------------------------------------------"
+    SPACE = "                                                          "
+
     def call
-        puts "’Tis some visitor, tapping at my chamber door—".blue
-        puts "Have you come to indulge in my trophies?".blue
-        puts "Well, well..".blue
+        puts <<~HEREDOC
+                                    .     .
+                                    !!!!!!!                            
+           ..'''::::..      .       [[[|]]]   .
+       .::'      ``::..     !!!!!!!!|--_--|!!!!!
+'...::'          `'':::.    [[[[[[[[\\_(X)_/]]]]]
+                . . |=| ._/-__-__\\===========/-__\\_
+                !!!!!!!!!\\========[ /]]|[[\\ ]=====/
+            /_-_-| | |-_--|=| | | ||=|_|_|=||"|==|
+           /-__--|_|_|_-_-| |_|_|=||______=||_| =|
+          /-----------------------\\===========/-----/
+          ^^^\\^^^^^^^^^^^^^^^^^^^^^^[[|]]|[[|]]=====/
+              |.' ..==::'"'::==.. '.[ /~~~~~\\ ]]]]]]]
+              | .'=[[[|]]|[[|]]]=`._||==  =  || =\\ ]
+              ||= == ||:^s^:|| = == ||=| | | || |=||
+             _||_ = =||o---.|| = ==_||_= == =||==_||_
+             \\__/= = ||:   :||= == \\__/[][][][][]\\__/
+             [||]= ==||:___:|| = = [||]\\//\\//\\[||]
+             }  {---'"'-----'"'- --}  {//\\//\\//}  {
+         ____[==]__________________[==]\\//\\//\\[==]_____
+          |`|~~~~|================|~~~~|~~~~~~~~|~~~~||
+       jgs|^| ^  |================|^   | ^ ^^ ^ |  ^ ||
+        HEREDOC
+        puts SPACE
         puts "Welcome to Libri, a chamber full of literary wonders.".blue
-        puts "Do come inside, this will take a few moments..".blue
+        puts "Come freely. This will take a few moments..".blue
+        puts "Below are some of the most prized literary awards of our time.".blue
+        puts LINE
         list_awards
+        puts LINE
         leave
     end
 
@@ -16,7 +43,9 @@ class Libri::CLI
         @awards_array.each.with_index(1) { |award, i|
             puts "#{i}. #{award[:name]}"
         }
+        puts LINE
         puts "Which award would you like to explore?".blue
+        puts LINE
 
         menu_awards
     end
@@ -26,7 +55,9 @@ class Libri::CLI
         @books_array.each.with_index(1) { |book, i|
             puts "#{i}. #{book[:title]} #{book[:author]}. #{book[:rating]}"
         }
+        puts LINE
         puts "Which book would you like to know more about?".blue
+        puts LINE
 
         menu_books(award)
     end
@@ -34,9 +65,21 @@ class Libri::CLI
     def list_details(book)
         @book_info_hash = Libri::Book.scrape_book(book)
         @book_info_hash.each { |key, val|
+            puts SPACE
             puts "#{key.upcase}".red
+            puts LINE
             puts "#{val}"
         }
+    end
+
+    def random_quote
+        @quotes_array = Libri::Quote.scrape_quote
+        @random = @quotes_array.sample
+        @random.each { |key, val|
+            puts SPACE
+            puts "#{val}"
+        }
+        puts SPACE
     end
 
     def menu_awards
@@ -45,12 +88,16 @@ class Libri::CLI
         if input.to_i > 0
             award = @awards_array[input.to_i - 1]
             list_books(award)
-        elsif input == "list awards"
+        elsif input == "nevermore"
+            puts LINE
+            random_quote
+        elsif input == "awards"
             list_awards
         elsif input == "exit"
             nil
         else
             puts "The raven croaked, 'Please try again.'".red
+            puts LINE
             list_awards
         end
     end
@@ -61,24 +108,29 @@ class Libri::CLI
         if input.to_i > 0
             book = @books_array[input.to_i - 1]
             list_details(book)
-            puts "---------------------------------------------------"
-            puts "To list the books of the same award again, type list books.".blue
-            puts "To list all the awards again, type list awards".blue
+            puts LINE
+            puts "   To list the books of the same award again, type books.".blue
+            puts "   To list all the awards again, type awards".blue
+            puts LINE
             menu_books(award)            
-        elsif input == "list books"
+        elsif input == "nevermore"
+            puts LINE
+            random_quote
+        elsif input == "books"
             list_books(award)
-        elsif input == "list awards"
+        elsif input == "awards"
             list_awards
         elsif input == "exit"
             nil
         else
             puts "The raven croaked, 'Please try again.'".red
+            puts LINE
             list_books(award)
         end
     end
 
     def leave
-        puts "Nevermore!".blue
+        puts "Farewell!".blue
     end
 
 end
