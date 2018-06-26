@@ -1,28 +1,23 @@
 class Libri::Awards
     attr_accessor :name, :url
-    
-    def self.all
-        self.scrape_barnes_noble
+
+    @@all = []
+
+    def initialize(awards_hash) 
+        awards_hash.each { |key, val|
+            send "#{key}=", val
+        }
+        @@all << self
     end
 
-    def self.scrape_barnes_noble
-        html = "https://www.barnesandnoble.com/b/books/awards/_/N-29Z8q8Z1d6q"
-        awards_page = Nokogiri::HTML(open(html))
-
-        # awards.name = awards_page.css("ul#sidebar-section-0 li a").text
-        # awards.url = awards_page.css("ul#sidebar-section-0 li a").attribute("href").value
-
-        awards_array = []
-        awards = {}
-
-        awards_page.css("ul#sidebar-section-0 li a").take(15).each { |award|
-            awards = {
-                :name => award.text.chomp,
-                :url => "https://www.barnesandnoble.com" + award.attribute("href").value
-            }
-            awards_array << awards
+    def self.create_from_collection(awards_array)
+        awards_array.each { |awards_hash|
+            self.new(awards_hash)
         }
-        awards_array
+    end
+
+    def self.all
+        @@all
     end
 
 end

@@ -1,23 +1,24 @@
 class Libri::Books
-    attr_accessor :award, :url
+    attr_accessor :title, :author, :url
 
-    def self.scrape_award(award)
-        html = award[:url]
-        books_page = Nokogiri::HTML(open(html))
+    @@all = []
 
-        books_array = []
-        books = {}
-
-        books_page.css("div.product-shelf-info").take(20).each { |book|
-            books = {
-                :title => book.css("div.product-shelf-title").text.strip,
-                :author => book.css("div.product-shelf-author").text.strip,
-                :url => "https://www.barnesandnoble.com" + book.css("a").attribute("href").value
-            } 
-
-            books_array << books
+    def initialize(books_hash) 
+        books_hash.each { |key, val|
+            send "#{key}=", val
         }
-        books_array
+        @@all << self
     end
+
+    def self.create_from_collection(books_array)
+        books_array.each { |books_hash|
+            self.new(books_hash)
+        }
+    end
+
+    def self.all
+        @@all
+    end
+
 end
 

@@ -1,22 +1,22 @@
 class Libri::Quote
-    attr_accessor :quote
+    attr_accessor :quote, :author
 
-    def self.scrape_quote
-        html = "https://www.goodreads.com/quotes/tag/books"
-        quotes_page = Nokogiri::HTML(open(html))
-        quote_section = quotes_page.css("div.quote")
+    @@all = []
 
-        quotes_array = []
-        quote_hash = {}
-
-        quote_section.each { |quote|
-            quote_hash = {
-                :quote => quote.css("div.quoteText").first.text.scan(/(“.+”)/).join(""),
-                :author => quote.css("div.quoteText a").first.text
-            }
-
-            quotes_array << quote_hash
+    def initialize(quote_hash) 
+        quote_hash.each { |key, val|
+            send "#{key}=", val
         }
-        quotes_array
+        @@all << self
+    end
+
+    def self.create_from_collection(quotes_array)
+        quotes_array.each { |quote_hash|
+            self.new(quote_hash)
+        }
+    end
+
+    def self.all
+        @@all
     end
 end
