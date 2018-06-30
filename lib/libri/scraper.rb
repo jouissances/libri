@@ -3,13 +3,13 @@ class Scraper
     attr_accessor :url, :award, :book
 
     def self.scrape_barnes_noble
-        html = "https://www.barnesandnoble.com/b/books/awards/_/N-29Z8q8Z1d6q"
+        html = "https://www.barnesandnoble.com/b/books/awards/_/N-8q8Z1d6q?showMoreIds=10008"
         awards_page = Nokogiri::HTML(open(html))
 
         awards_array = []
         awards = {}
 
-        awards_page.css("ul#sidebar-section-0 li a").take(15).each { |award|
+        awards_page.css("ul#sidebar-section-0 li a").take(28).each { |award|
             awards = {
                 :name => award.text.chomp,
                 :url => "https://www.barnesandnoble.com" + award.attribute("href").value

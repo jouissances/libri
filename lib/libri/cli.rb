@@ -100,7 +100,7 @@ class Libri::CLI
     def menu_awards
         input = STDIN.gets.strip.downcase
     
-        if input.to_i.between?(1,15)
+        if input.to_i.between?(1,28)
             award = @awards_array[input.to_i - 1]
             Libri::Books.all.clear
             make_books(award)
