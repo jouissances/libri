@@ -31,7 +31,7 @@ class Libri::CLI
     def call
         puts STRING
         puts SPACE
-        puts "Welcome to Libri, a chamber full of literary wonders.".blue
+        puts "Welcome to Libri. I'm the Raven, your guide in this chamber full of literary wonders.".blue
         puts "Below are some of the most prized literary awards of our time.".blue
         puts "Come freely. This will take a few moments..".blue
         puts LINE

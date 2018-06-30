@@ -15,17 +15,9 @@ class Libri::Book
           self.new(book_info_hash)
         }
     end
-
-    def add_book_info(book_info_hash)
-        book_info_hash.each { |key, val|
-          send "#{key}=", val
-        }
-        self
-    end
     
-      def self.all
+    def self.all
         @@all
-      end 
-
+    end 
 
 end

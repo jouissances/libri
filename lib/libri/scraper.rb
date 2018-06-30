@@ -6,9 +6,6 @@ class Scraper
         html = "https://www.barnesandnoble.com/b/books/awards/_/N-29Z8q8Z1d6q"
         awards_page = Nokogiri::HTML(open(html))
 
-        # awards.name = awards_page.css("ul#sidebar-section-0 li a").text
-        # awards.url = awards_page.css("ul#sidebar-section-0 li a").attribute("href").value
-
         awards_array = []
         awards = {}
 
@@ -38,7 +35,8 @@ class Scraper
 
             books_array << books
         }
-        books_array
+
+        books_array.uniq
     end
 
     def self.scrape_book(book)
@@ -52,7 +50,7 @@ class Scraper
             :title_by_author => info_section.css("div#productInfoOverview div.mb-m").text,
             :blurbs_and_plot => info_section.css("div#productInfoOverview p").map(&:text).join("\n").strip,
             :about_author => info_section.css("div#MeetTheAuthor div.text--medium").text.strip,
-            :excerpt => info_section.xpath("//div[@class='read-an-excerpt']/p[not(@class) and position()<7]").map(&:text).join("\n"),
+            :excerpt => info_section.xpath("//div[@class='read-an-excerpt']/p[not(@class) and position()<5]").map(&:text).join("\n"),
             # :related_books => book_page.css("div.product-shelf-info").each { |book|
             #     related_books_hash = {
             #         :title => book.css("div.product-shelf-title").text.strip,
@@ -64,7 +62,7 @@ class Scraper
             :url => book[:url]
         }
 
-        # book_info_hash.delete_if { |key, val| val.to_s.strip.empty? }
+        book_info_hash.delete_if { |key, val| val.to_s.strip.empty? }
 
     end
 
