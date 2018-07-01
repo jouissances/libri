@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    libri (0.2.5)
+    libri (0.2.6)
       colorize
       nokogiri (~> 1.8.3)
 
