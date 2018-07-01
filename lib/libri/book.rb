@@ -10,10 +10,8 @@ class Libri::Book
         @@all << self
     end
 
-    def self.create_from_collection(book_info_array)
-        book_info_array.map { |book_info_hash|
-          self.new(book_info_hash)
-        }
+    def self.create_from_collection(book_info_hash)
+        self.new(book_info_hash)
     end
     
     def self.all

@@ -17,8 +17,7 @@ class Libri::CLI
     end
 
     def make_awards
-        @awards_array = Libri::Scraper.new.scrape_barnes_noble
-        Libri::Awards.create_from_collection(awards_array)
+        Libri::Scraper.new.scrape_barnes_noble
     end
 
     def list_awards
@@ -33,8 +32,7 @@ class Libri::CLI
     end
 
     def make_books(award)
-        @books_array = Libri::Scraper.new.scrape_award(award)
-        Libri::Books.create_from_collection(books_array)
+        Libri::Scraper.new.scrape_award(award)
     end
 
     def list_books(award)
@@ -50,33 +48,60 @@ class Libri::CLI
     end
 
     def list_details(book)
-        @book_info_hash = Libri::Scraper.new.scrape_book(book)
+        info = Libri::Scraper.new.scrape_book(book)
+    
+        puts 
+        puts "Title by Author".upcase.red
+        puts LINE
+        puts "#{info.title_by_author}"
+        puts
+        puts "Blurbs and Plot".upcase.red
+        puts LINE
+        puts "#{info.blurbs_and_plot}"
+        puts
+        puts "About the Author".upcase.red
+        puts LINE
+        puts "#{info.about_author}"
+        puts 
+        puts "Availability".upcase.red
+        puts LINE
+        puts "#{info.availability}"
+        puts        
+        puts "URL".upcase.red
+        puts LINE
+        puts "#{info.url}"
+        puts 
 
-        @book_info_hash.each { |key, val|
-            puts
-            puts "#{key}".upcase.red
-            puts LINE
-            puts "#{val}"
-        }     
+        if !info.excerpt.nil?
+            puts "An excerpt of this book is available. Would you like to read it? (Yn)"
+            input = STDIN.gets.strip.downcase
+            if input == "y"
+                puts
+                puts "Excerpt".upcase.red
+                puts LINE
+                puts "#{info.excerpt.slice(1..1000)}..."
+                puts
+            else
+                menu_books(award)
+            end
+        end
     end
 
     def random_quote
-        @quotes_array = Libri::Scraper.new.scrape_quote
-        Libri::Quote.create_from_collection(quotes_array)
+        quote = Libri::Scraper.new.scrape_quote.sample
 
-        random = @quotes_array.sample
-        random.each { |key, val|
-            puts 
-            puts "#{val}"
-        }
+        puts
+        puts "#{quote.quote}"
         puts 
+        puts "#{quote.author}"
+        puts
     end
 
     def menu_awards
         input = STDIN.gets.strip.downcase
     
         if input.to_i.between?(1,Libri::Awards.all.size)
-            award = @awards_array[input.to_i - 1]
+            award = Libri::Awards.all[input.to_i - 1]
             Libri::Books.all.clear
             make_books(award)
             list_books(award)
@@ -97,14 +122,14 @@ class Libri::CLI
     def menu_books(award)
         input = STDIN.gets.strip.downcase
     
-        if input.to_i.between?(1,20)
-            book = @books_array[input.to_i - 1]
+        if input.to_i.between?(1,Libri::Books.all.size)
+            book = Libri::Books.all[input.to_i - 1]
             list_details(book)
             puts LINE
             puts "To list the books of the same award again, type books".blue
             puts "To list all the awards again, type awards".blue
             puts LINE
-            menu_books(award)            
+            menu_books(award)               
         elsif input == "nevermore"
             puts LINE
             random_quote
