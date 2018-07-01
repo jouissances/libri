@@ -4,14 +4,14 @@ class Libri::Quote
     @@all = []
 
     def initialize(quote_hash) 
-        quote_hash.each { |key, val|
+        quote_hash.map { |key, val|
             send "#{key}=", val
         }
         @@all << self
     end
 
     def self.create_from_collection(quotes_array)
-        quotes_array.each { |quote_hash|
+        quotes_array.map { |quote_hash|
             self.new(quote_hash)
         }
     end

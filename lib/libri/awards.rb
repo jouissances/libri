@@ -4,14 +4,14 @@ class Libri::Awards
     @@all = []
 
     def initialize(awards_hash) 
-        awards_hash.each { |key, val|
+        awards_hash.map { |key, val|
             send "#{key}=", val
         }
         @@all << self
     end
 
     def self.create_from_collection(awards_array)
-        awards_array.each { |awards_hash|
+        awards_array.map { |awards_hash|
             self.new(awards_hash)
         }
     end

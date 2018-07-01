@@ -4,14 +4,14 @@ class Libri::Book
     @@all = []
 
     def initialize(book_info_hash) 
-        book_info_hash.each { |key, val|
+        book_info_hash.map { |key, val|
             send "#{key}=", val
         }
         @@all << self
     end
 
     def self.create_from_collection(book_info_array)
-        book_info_array.each { |book_info_hash|
+        book_info_array.map { |book_info_hash|
           self.new(book_info_hash)
         }
     end

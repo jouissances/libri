@@ -3,37 +3,12 @@ class Libri::CLI
     attr_accessor :award, :awards_array, :books_array, :book_info_hash, :quotes_array, :title_by_author
 
     LINE = "----------------------------------------------------------"
-    SPACE = "                                                          "
-    STRING = <<-EOS
-                                         .     .
-                                         !!!!!!!                            
-                ..'''::::..      .       [[[|]]]   .
-            .::'      ``::..     !!!!!!!!|--_--|!!!!!
-        '...::'          `'':::.    [[[[[[[[\\_(X)_/]]]]]
-                        . . |=| ._/-__-__\\===========/-__\\_
-                        !!!!!!!!!\\========[ /]]|[[\\ ]=====/
-                    /_-_-| | |-_--|=| | | ||=|_|_|=||"|==|
-                  /-__--|_|_|_-_-| |_|_|=||______=||_|  =|
-                /-----------------------\\===========/-----/
-                ^^^\\^^^^^^^^^^^^^^^^^^^^^^[[|]]|[[|]]=====/
-                    |.' ..==::'"'::==.. '.[ /~~~~~\\ ]]]]]]]
-                    | .'=[[[|]]|[[|]]]=`._||==  =  || =\\ ]
-                    ||= == ||:^s^:|| = == ||=| | | || |=||
-                   _||_ = =||o---.|| = ==_||_= == =||==_||_
-                   \\__/= = ||:   :||= == \\__/[][][][][]\\__/
-                   [||]= ==||:___:|| = = [||]\\//\\//\\[||]
-                   }  {---'"'-----'"'- --}  {//\\//\\//}  {
-                ____[==]__________________[==]\\//\\//\\[==]_____
-                 |`|~~~~|================|~~~~|~~~~~~~~|~~~~||
-            jgs|^| ^  |================|^   | ^ ^^ ^ |  ^ ||
-        EOS
 
     def call
-        puts STRING
-        puts SPACE
-        puts "Welcome to Libri. I'm the Raven, your guide in this chamber full of literary wonders.".blue
+        puts "Welcome to Libri.".blue
+        puts "I'm the Raven, your guide in this chamber full of literary wonders.".blue
         puts "Below are some of the most prized literary awards of our time.".blue
-        puts "Come freely. This will take a few moments..".blue
+        puts "Come freely. This will take a few moments...".blue
         puts LINE
         make_awards
         list_awards
@@ -42,7 +17,7 @@ class Libri::CLI
     end
 
     def make_awards
-        @awards_array = Scraper.scrape_barnes_noble
+        @awards_array = Libri::Scraper.new.scrape_barnes_noble
         Libri::Awards.create_from_collection(awards_array)
     end
 
@@ -58,7 +33,7 @@ class Libri::CLI
     end
 
     def make_books(award)
-        @books_array = Scraper.scrape_award(award)
+        @books_array = Libri::Scraper.new.scrape_award(award)
         Libri::Books.create_from_collection(books_array)
     end
 
@@ -75,10 +50,10 @@ class Libri::CLI
     end
 
     def list_details(book)
-        @book_info_hash = Scraper.scrape_book(book)
+        @book_info_hash = Libri::Scraper.new.scrape_book(book)
 
         @book_info_hash.each { |key, val|
-            puts SPACE
+            puts
             puts "#{key}".upcase.red
             puts LINE
             puts "#{val}"
@@ -86,21 +61,21 @@ class Libri::CLI
     end
 
     def random_quote
-        @quotes_array = Scraper.scrape_quote
+        @quotes_array = Libri::Scraper.new.scrape_quote
         Libri::Quote.create_from_collection(quotes_array)
 
         random = @quotes_array.sample
         random.each { |key, val|
-            puts SPACE
+            puts 
             puts "#{val}"
         }
-        puts SPACE
+        puts 
     end
 
     def menu_awards
         input = STDIN.gets.strip.downcase
     
-        if input.to_i.between?(1,28)
+        if input.to_i.between?(1,Libri::Awards.all.size)
             award = @awards_array[input.to_i - 1]
             Libri::Books.all.clear
             make_books(award)
@@ -126,8 +101,8 @@ class Libri::CLI
             book = @books_array[input.to_i - 1]
             list_details(book)
             puts LINE
-            puts "   To list the books of the same award again, type books".blue
-            puts "   To list all the awards again, type awards".blue
+            puts "To list the books of the same award again, type books".blue
+            puts "To list all the awards again, type awards".blue
             puts LINE
             menu_books(award)            
         elsif input == "nevermore"
