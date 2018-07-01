@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 require "bundler/setup"
-require "libri"
+require_relative "../lib/libri.rb"
 
 Libri::CLI.new.call
