@@ -82,7 +82,7 @@ class Libri::CLI
                 puts "#{info.excerpt.slice(1..1000)}..."
                 puts
             else
-                menu_books(award)
+                nil
             end
         end
     end

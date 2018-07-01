@@ -46,7 +46,6 @@ class Libri::Scraper
             :blurbs_and_plot => info_section.css("div#productInfoOverview p").map(&:text).join("\n").strip,
             :about_author => info_section.css("div#MeetTheAuthor div.text--medium").text.strip,
             :excerpt => info_section.css("div.read-an-excerpt p").text,
-            # info_section.xpath("//div[@class='read-an-excerpt']/p[not(@class) and position()<3]").map(&:text).join("\n"),
             :availability => book_page.css("button#pdp-marketplace-btn").text.chomp,
             :url => book.url
         }.delete_if { |key, val| val.to_s.strip.empty? }
