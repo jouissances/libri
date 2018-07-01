@@ -73,7 +73,7 @@ class Libri::CLI
         puts 
 
         if !info.excerpt.nil?
-            puts "An excerpt of this book is available. Would you like to read it? (Yn)"
+            puts "An excerpt of this book is available. Would you like to read it? (Yn)".blue
             input = STDIN.gets.strip.downcase
             if input == "y"
                 puts
