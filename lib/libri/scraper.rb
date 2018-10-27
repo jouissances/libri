@@ -63,7 +63,7 @@ class Libri::Scraper
         quotes_array = quote_section.map { |quote|
             quote_hash = {
                 :quote => quote.css("div.quoteText").first.text.scan(/(“.+”)/).join(""),
-                :author => quote.css("div.quoteText a").first.text
+                :author => quote.css("div.quoteText span.authorOrTitle").first.text
             }
         }
         
